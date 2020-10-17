@@ -45,39 +45,17 @@ function checkOnline() {
   }
 }
 
-function checkMobile() {
+function checkDesktop() {
   // Detect if the user is using a mobile device
-  const isMobile = navigator.userAgent.match(
+  const isDesktop = !navigator.userAgent.match(
     /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
   );
-  console.log("isMobile: ", isMobile);
-  if (!isMobile) {
-    alert("Please use this app only on mobile for a better experience!");
+  console.log("isDesktop: ", isDesktop);
+  if (!isDesktop) {
+    alert("Please use this portal on desktop for a better experience!");
     return quit;
   }
 }
 
-function iosOrAndroid() {
-  // Detect if the user is using a mobile device
-  const isIOS = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i);
-  const isAndroid = navigator.userAgent.match(/(android)|(webOS)/i);
-  console.log("IOS: ", isIOS);
-  console.log("Android: ", isAndroid);
-}
-
-function checkIndexedDB() {
-  const indexedDBSupport = "indexedDB" in window;
-  console.log("IndexedDB is supported:", indexedDBSupport);
-  if (!indexedDBSupport)
-    alert(
-      "IndexedDB not supported, performance and offline usage will be impacted"
-    );
-}
-
 // Call setupExecutor with all the setup functions to run and export the setup process result
-export default setupExecutor(
-  checkOnline
-  // checkMobile,
-  // iosOrAndroid,
-  // checkIndexedDB
-);
+export default setupExecutor(checkOnline, checkDesktop);

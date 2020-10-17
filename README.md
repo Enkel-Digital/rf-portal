@@ -1,5 +1,5 @@
-# Class Express Partners website
-Website for Class Express Partners. Used for managing your classes.
+# Portal for RF
+Scaffolded using [ClassExpress partner portal](https://github.com/Enkel-Digital/class-express-partners/tree/48fd8bb2898186903e2883b8c00d7a3e8825097f)
 
 ## Project setup
 ```
@@ -31,7 +31,4 @@ This project is developed and made available under the "AGPL License"
 If you have any questions, contact us via [email](mailto:developer@enkeldigital.com)  
 Authors:
 - [JJ](https://github.com/Jaimeloeuf)
-- [Jessica](https://github.com/jessicajacelyn)
-- [Kong Wei](https://github.com/kongwei93)
-- [Zi Kang](https://github.com/zzkzzzz)
-- [Joshua](https://github.com/leeszeray)
+- [Developers of ClassExpress Partner Portal](https://github.com/Enkel-Digital/class-express-partners/tree/6f76781b37ab401361910c4635995d6ceb1a9754/README.md#license-author-and-contributing)
