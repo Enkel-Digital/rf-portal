@@ -50,11 +50,29 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-subheader>Finance</v-subheader>
+      <!-- @todo Convert this to their sub plan page like CE app / billing, where they can upgrade plan and see their usage and limits -->
+      <!-- <v-subheader>Billing</v-subheader>
       <v-list-item
         exact
         ripple
-        v-for="item in financeTabs"
+        v-for="item in billingTabs"
+        :key="item.title"
+        :to="item.link"
+      >
+        <v-list-item-icon>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item> -->
+
+      <v-subheader>Reviews</v-subheader>
+      <v-list-item
+        exact
+        ripple
+        v-for="item in reviewTabs"
         :key="item.title"
         :to="item.link"
       >
@@ -67,11 +85,28 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-subheader>Classes</v-subheader>
+      <v-subheader>Tags</v-subheader>
       <v-list-item
         exact
         ripple
-        v-for="item in classTabs"
+        v-for="item in tagTabs"
+        :key="item.title"
+        :to="item.link"
+      >
+        <v-list-item-icon>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-subheader>Linking</v-subheader>
+      <v-list-item
+        exact
+        ripple
+        v-for="item in linkTabs"
         :key="item.title"
         :to="item.link"
       >
@@ -134,44 +169,68 @@ export default {
           text: "Dashboard",
           link: { name: "home" },
         },
-        {
-          icon: "mdi-calendar-month",
-          text: "Schedule",
-          link: { name: "view-schedule" },
-        },
+        // {
+        //   icon: "mdi-calendar-month",
+        //   text: "Schedule",
+        //   link: { name: "view-schedule" },
+        // },
       ],
-      classTabs: [
+      // billingTabs: [
+      //   {
+      //     icon: "mdi-cash-usd",
+      //     text: "Earnings",
+      //     link: { name: "earnings" },
+      //   },
+      //   {
+      //     icon: "mdi-card-text",
+      //     text: "Withdrawal",
+      //     link: { name: "withdrawal" },
+      //   },
+      // ],
+      reviewTabs: [
         {
           icon: "mdi-view-list",
-          text: "All Classes",
-          link: { name: "all-classes" },
+          text: "Reviews",
+          link: { name: "reviews" },
+        },
+        // {
+        //   icon: "mdi-plus",
+        //   text: "Add New Class",
+        //   link: { name: "new-class" },
+        // },
+        // {
+        //   icon: "mdi-calendar-clock",
+        //   text: "Bookings",
+        //   link: { name: "bookings" },
+        // },
+        // {
+        //   icon: "mdi-message-draw",
+        //   text: "Reviews",
+        //   link: { name: "all-reviews" },
+        // },
+      ],
+      tagTabs: [
+        {
+          icon: "mdi-view-list",
+          text: "View tags",
+          link: { name: "tags" },
         },
         {
           icon: "mdi-plus",
-          text: "Add New Class",
-          link: { name: "new-class" },
-        },
-        {
-          icon: "mdi-calendar-clock",
-          text: "Bookings",
-          link: { name: "bookings" },
-        },
-        {
-          icon: "mdi-message-draw",
-          text: "Reviews",
-          link: { name: "all-reviews" },
+          text: "Add New Tag",
+          link: { name: "new-tag" },
         },
       ],
-      financeTabs: [
+      linkTabs: [
         {
-          icon: "mdi-cash-usd",
-          text: "Earnings",
-          link: { name: "earnings" },
+          icon: "mdi-view-list",
+          text: "View All links",
+          link: { name: "all-links" },
         },
         {
-          icon: "mdi-card-text",
-          text: "Withdrawal",
-          link: { name: "withdrawal" },
+          icon: "mdi-plus",
+          text: "Generate new link",
+          link: { name: "new-link" },
         },
       ],
       generalTabs: [

@@ -17,6 +17,13 @@ const routes = [
     component: () => import("@/views/Home.vue"),
     meta: { Auth_requirements: AuthType.private },
   },
+  // Support URL querys to store the filtering list, so that they can actually bookmark this
+  {
+    path: "/reviews",
+    name: "reviews",
+    component: () => import("@/views/Reviews.vue"),
+    meta: { Auth_requirements: AuthType.private },
+  },
   {
     // Partner's schedule for all classes
     // @todo Add support for "Partner's schedule for a selected class" prop
@@ -46,13 +53,6 @@ const routes = [
     props: true,
   },
   {
-    path: "/reviews/all",
-    name: "all-reviews",
-    component: () => import("@/views/AllClasses.vue"),
-    meta: { Auth_requirements: AuthType.private },
-    props: { routeName: "reviews" },
-  },
-  {
     path: "/bookings",
     name: "bookings",
     component: () => import("@/views/Bookings.vue"),
@@ -69,13 +69,6 @@ const routes = [
     name: "earningsHistory",
     component: () => import("@/views/EarningsHistory.vue"),
     meta: { Auth_requirements: AuthType.private },
-  },
-  {
-    path: "/reviews/:classID",
-    name: "reviews",
-    component: () => import("@/views/Reviews.vue"),
-    meta: { Auth_requirements: AuthType.private },
-    props: true,
   },
   {
     path: "/partnerProfile",
