@@ -67,7 +67,7 @@ async function _getClassSchedule(
   delete schedulesToFetch[classID][date];
 
   // @todo See if this.call(this) is actually valid
-  if (!response.success)
+  if (!response.ok)
     return apiError(
       response,
       () => this.call(this),

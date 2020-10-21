@@ -17,7 +17,7 @@ import Vue from "vue";
  *  // Basically to make everything before API call to be indempotent to allow for retries.
  *
  *  const response = await api.get("YOUR_API_ENDPOINT");
- *  if (!response.success)
+ *  if (!response.ok)
  *    // Always return to ensure that function execution stops here.
  *    return apiError(response, (self) =>
  *      self.$store.dispatch("YOUR_VUEX_ACTION", ACTION_ARGUEMENT)
@@ -32,7 +32,7 @@ import Vue from "vue";
  * // This is usually preferred when working in a module, so you can dispatch without needing to add namespace
  * async YOUR_VUEX_ACTION({ commit }, ACTION_ARGUEMENT) {
  *  const response = await api.get("YOUR_API_ENDPOINT");
- *  if (!response.success)
+ *  if (!response.ok)
  *    return apiError(response, () => dispatch("YOUR_VUEX_ACTION", ACTION_ARGUEMENT));
  *
  *  // Only modify state if API is successful so this action's first part before the api call must be indempotent

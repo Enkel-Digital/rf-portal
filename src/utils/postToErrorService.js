@@ -17,7 +17,7 @@ import { errorApiEndpoint } from "@/config"; // Put this into config
 function errorHandler(error) {
   // Only log in non production environments
   if (process.env.NODE_ENV !== "production") console.error(error);
-  return { success: false, error: error.message };
+  return { ok: false, error: error.message };
 }
 
 const api = new fetch(firebase.auth, errorApiEndpoint, errorHandler);

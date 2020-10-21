@@ -17,7 +17,7 @@ export default {
       const response = await apiWithLoader.get(
         `/partner/${rootState.user.partnerID}`
       );
-      if (!response.success)
+      if (!response.ok)
         return apiError(response, () => dispatch("getPartnerDetails"));
 
       commit("setter", ["partner", response.partner]);

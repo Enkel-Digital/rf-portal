@@ -39,7 +39,7 @@ export default {
         `/class/of/${rootState.user.partnerID}`
       );
 
-      if (!response.success)
+      if (!response.ok)
         return apiError(response, () => dispatch("getPartnerClasses"));
 
       dispatch("getClass", response.classIDs);
@@ -54,8 +54,7 @@ export default {
       if (state.review && classID === state.review[classID]) return;
 
       const response = await apiWithLoader.get(`/reviews/class/${classID}`);
-      if (!response.success)
-        return apiError(response, () => dispatch("getReview"));
+      if (!response.ok) return apiError(response, () => dispatch("getReview"));
 
       commit("setter", ["review", response.reviews]);
     },
@@ -65,8 +64,7 @@ export default {
       if (state.review && classID === state.review[classID]) return;
 
       const response = await apiWithLoader.get(`/reviews/class/${classID}`);
-      if (!response.success)
-        return apiError(response, () => dispatch("getReview"));
+      if (!response.ok) return apiError(response, () => dispatch("getReview"));
 
       commit("setter", ["review", response.reviews]);
     },

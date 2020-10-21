@@ -14,7 +14,7 @@ function errorHandler(error) {
   // Assumes that the fetch user will handle the error when success is false.
   // @todo Create the network error here and pass it back
   // @todo I can also send to the store here, then return nothing to ask the caller to ignore?
-  return { success: false, error: error.message };
+  return { ok: false, error: error.message };
 }
 
 export default new fetch(firebase.auth, apiUrl, errorHandler);

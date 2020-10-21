@@ -58,7 +58,7 @@ export default new Vuex.Store({
       email = email.toLowerCase();
 
       const response = await apiWithLoader.get(`/user/${email}`);
-      if (!response.success)
+      if (!response.ok)
         return apiError(response, (self) =>
           self.$store.dispatch("getUserDetails", email)
         );

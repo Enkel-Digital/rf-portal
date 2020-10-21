@@ -68,7 +68,7 @@ async function _getClass(classes, commit, classID) {
   */
   if (classesToFetch[classID]) {
     const response = await classesToFetch[classID];
-    if (response.success) return response.class;
+    if (response.ok) return response.class;
     else return; // Explicit end of function to prevent execution from continuing and re-running the API call.
   }
 
@@ -84,7 +84,7 @@ async function _getClass(classes, commit, classID) {
 
   // @todo Returning apiError will mess up caller's code, which may depend on getting back the class object or undefined
   // @todo If res fails but the reason is because invalid classID, maybe I should do smth else instead?
-  if (!response.success)
+  if (!response.ok)
     return apiError(
       response,
       _getClass.bind(this, classes, commit, classID),

@@ -187,7 +187,7 @@ export default {
             : "http://localhost:8081/#/signup",
       });
 
-      if (!response.success) return apiError(response, this.createNewEmployee);
+      if (!response.ok) return apiError(response, this.createNewEmployee);
 
       // Close the new employee dialog
       this.addEmployeeDialog = false;
@@ -204,7 +204,7 @@ export default {
       // @todo Add a confirmation check, either using alert or a in app dialog
 
       const response = await apiWithLoader.delete(`/user/${employeeID}`);
-      if (!response.success) return apiError(response, this.deleteEmployee);
+      if (!response.ok) return apiError(response, this.deleteEmployee);
 
       // Close the employee details dialog once delete completes
       this.employeeDetailDialog = false;

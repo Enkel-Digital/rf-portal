@@ -330,8 +330,8 @@ export default {
           },
         });
 
-        // Check for success with response and throw for signup logic to catch
-        if (!response.success) throw new Error(response.error);
+        // Check for ok with response and throw for signup logic to catch
+        if (!response.ok) throw new Error(response.error);
 
         // Show dialog to inform user to verify email and allow them to redirect to login view
         this.completeSignupDialog = true;

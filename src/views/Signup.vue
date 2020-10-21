@@ -144,7 +144,7 @@ export default {
         });
 
         // Let the catch block handle this
-        if (!response.success)
+        if (!response.ok)
           throw new Error(
             "Link failed API verification with: " + response.error
           );
@@ -201,10 +201,10 @@ export default {
           },
         });
 
-        // Check for success with res and throw for signup logic to catch
-        // @todo Test if this error throwing is successfully caught by errorDialog... yes i guess? since look at the catch block with the createError?
+        // Check for ok with res and throw for signup logic to catch
+        // @todo Test if this error throwing is okfully caught by errorDialog... yes i guess? since look at the catch block with the createError?
         // @todo Handle this failure case more specifically?
-        if (!res.success) throw new Error(res.error);
+        if (!res.ok) throw new Error(res.error);
 
         /* Dispatch signin action and redirect to homescreen after auth process completes */
         this.$store.dispatch("signin", this.parsed_email);

@@ -17,7 +17,7 @@ export default {
   actions: {
     async getBookings({ state, commit, dispatch }, partnerID) {
       const response = await apiWithLoader.get(`/bookings/all/${partnerID}`);
-      if (!response.success)
+      if (!response.ok)
         return apiError(response, () => dispatch("getBookings"));
 
       console.log("bookings", response);
