@@ -7,13 +7,14 @@ import apiError from "@/store/utils/apiError";
 import initialState from "./initialState";
 import setter from "./utils/setter";
 
-import classesModule from "./module/classes";
-import bookingsModule from "./module/bookings";
-import employeesModule from "./module/employees";
-import partnerModule from "./module/partner";
-import pointsModule from "./module/points";
-import subscriptionPlanModule from "./module/subscriptionPlan";
-import earningsHistoryModule from "./module/earningsHistory";
+// import classesModule from "./module/classes";
+// import bookingsModule from "./module/bookings";
+// import employeesModule from "./module/employees";
+// import partnerModule from "./module/partner";
+// import pointsModule from "./module/points";
+// import subscriptionPlanModule from "./module/subscriptionPlan";
+// import earningsHistoryModule from "./module/earningsHistory";
+import reviewsModule from "./module/reviews";
 
 Vue.use(Vuex);
 
@@ -21,13 +22,14 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV.toLowerCase() !== "production",
   state: initialState(),
   modules: {
-    classes: classesModule,
-    bookings: bookingsModule,
-    employees: employeesModule,
-    partner: partnerModule,
-    points: pointsModule, // User points and not all points related
-    subscription: subscriptionPlanModule,
-    earningsHistory: earningsHistoryModule,
+    // classes: classesModule,
+    // bookings: bookingsModule,
+    // employees: employeesModule,
+    // partner: partnerModule,
+    // points: pointsModule, // User points and not all points related
+    // subscription: subscriptionPlanModule,
+    // earningsHistory: earningsHistoryModule,
+    reviews: reviewsModule,
   },
   mutations: {
     setter,
@@ -43,11 +45,10 @@ export default new Vuex.Store({
      * Main init function of store that calls all the other init actions from all the modules
      * @function init
      */
-    async init({ dispatch, state }) {
+    async init({ dispatch }) {
       console.log("Initializing vuex store and its modules...");
 
-      dispatch("points/init");
-      dispatch("partner/getPartnerDetails");
+      // dispatch("points/init");
     },
     /**
      * Function to get all the user's details
