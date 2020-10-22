@@ -34,15 +34,15 @@ const routes = [
     props: true,
   },
   {
-    path: "/class/all",
-    name: "all-classes",
-    component: () => import("@/views/AllClasses.vue"),
+    path: "/link/all",
+    name: "all-links",
+    component: () => import("@/views/AllLinks.vue"),
     meta: { Auth_requirements: AuthType.private },
   },
   {
-    path: "/class/add",
-    name: "new-class",
-    component: () => import("@/views/AddNewClass.vue"),
+    path: "/link/new",
+    name: "new-link",
+    component: () => import("@/views/NewLink.vue"),
     meta: { Auth_requirements: AuthType.private },
   },
   {
