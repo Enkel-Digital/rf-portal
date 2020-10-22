@@ -8,31 +8,45 @@ import setter from "../../utils/setter";
 import apiError from "@/store/utils/apiError";
 import apiWithLoader from "@/store/utils/apiWithLoader";
 
-// @todo Have the alternatives for loading reviews
+// @todo Create getReviews
 // import { getClass, addClass } from "./getClass";
-// import { getClassSchedule, addClassSchedule } from "./getClassSchedule";
 
 export default {
   namespaced: true,
   state: initialState(),
   mutations: {
     setter,
+    /* Or we can just store it entirely as an array? Instead of storing on object then getting back as array */
+    addReview(state, { botID, reviews }) {
+      // If first time loading reviews for bot, create empty object on the key first
+      if (!state.bot[botID]) Vue.set(state.bot, botID, {});
+
+      for (const review of reviews)
+        Vue.set(state.bot[botID], review.review.id, review.review);
+    },
   },
   actions: {
     /**
-     * Get list of partner's classIDs from API before dispatching getClass to load all of the classes
-     * @function getPartnerClasses
+     * Get review stats and list of review IDs from API before dispatching getReviews to load all of the reviews 1 by 1
+     * @function getReviews
      */
-    // API should return result without userReview
-    async getReviews({ state, commit, dispatch }, classID) {
-      // If review is already in state, ignore request
-      if (state.reviews && classID === state.reviews[classID]) return;
+    async getReviews({ rootState, state, commit, dispatch }) {
+      const botID = rootState.bots.current.id;
 
-      const response = await apiWithLoader.get(`/reviews/class/${classID}`);
-      if (!response.success)
-        return apiError(response, () => dispatch("getReview"));
+      const response = await apiWithLoader.get(`/reviews/bot/${botID}`);
+      if (!response.ok) return apiError(response, () => dispatch("getReviews"));
 
-      commit("setter", ["review", response.reviews]);
+      commit("setter", ["reviewStats", response.reviewStats]);
+
+      // @todo Dispatch the getReviews module/action. Right now all is loaded and processed at once
+
+      const reviews = await Promise.all(
+        response.reviewIDs.map((reviewID) =>
+          apiWithLoader.get(`/reviews/details/?reviewID=${reviewID}`)
+        )
+      );
+
+      commit("addReview", { botID, reviews });
     },
   },
 };

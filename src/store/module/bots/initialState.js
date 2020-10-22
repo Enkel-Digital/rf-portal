@@ -4,8 +4,13 @@
  */
 export default function initialState() {
   return {
-    bot: {
-      // botID: reviews {}
+    current: {
+      id: undefined,
+      createdAt: undefined,
+      createdBy: undefined,
+      name: undefined,
+      description: undefined,
     },
+    bots: [],
   };
 }
