@@ -226,6 +226,9 @@ export default {
 
       const linkID = await this.$store.dispatch("links/newLink", link);
 
+      // @todo Tmp redirect
+      this.$router.push({ name: "all-links" });
+
       // Redirect to show link details
       // if (linkID)
       //   this.$router.push({ name: "linkDetails", params: { linkID } });
