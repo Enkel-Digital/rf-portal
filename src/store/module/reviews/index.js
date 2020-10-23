@@ -24,6 +24,9 @@ export default {
       for (const review of reviews)
         Vue.set(state.bot[botID], review.review.id, review.review);
     },
+    addAllReviews(state, { botID, reviews }) {
+      Vue.set(state.bot, botID, reviews);
+    },
   },
   actions: {
     /**
@@ -46,7 +49,10 @@ export default {
         )
       );
 
-      commit("addReview", { botID, reviews });
+      commit("addAllReviews", {
+        botID,
+        reviews: reviews.map((review) => review.review),
+      });
     },
   },
 };

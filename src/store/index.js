@@ -16,6 +16,7 @@ import setter from "./utils/setter";
 // import earningsHistoryModule from "./module/earningsHistory";
 import botsModule from "./module/bots";
 import reviewsModule from "./module/reviews";
+import linksModule from "./module/links";
 
 Vue.use(Vuex);
 
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     // earningsHistory: earningsHistoryModule,
     bots: botsModule,
     reviews: reviewsModule,
+    links: linksModule,
   },
   mutations: {
     setter,

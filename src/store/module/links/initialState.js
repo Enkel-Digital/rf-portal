@@ -5,8 +5,8 @@
 export default function initialState() {
   return {
     bot: {
-      // botID: reviews {}
-      // botID: reviews [] ?
+      // botID: links {}
+      // botID: links [] ?
     },
   };
 }

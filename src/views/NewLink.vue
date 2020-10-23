@@ -178,9 +178,7 @@ export default {
 
       link: {
         name: null,
-        pictures: null,
         description: null,
-        length: null,
 
         // Create date in local timezone for today in the format of e.g. "2020-05-21"
         dateStart: moment().format("YYYY-MM-DD"),

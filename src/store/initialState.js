@@ -5,6 +5,7 @@
 export default function initialState() {
   return {
     user: {
+      id: undefined,
       businessID: undefined,
       admin: undefined,
       permissions: undefined,
