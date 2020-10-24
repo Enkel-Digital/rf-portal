@@ -1,5 +1,9 @@
 <template>
-  <v-main class="reviews">
+  <v-main style="text-align: left">
+    <v-btn icon large @click="refresh">
+      <v-icon>mdi-reload</v-icon>
+    </v-btn>
+
     <!-- Filtering menu -->
     <h1>UNTAGS status {{ `${untags}` }}</h1>
     <div v-if="untags.length">
@@ -26,28 +30,29 @@
     <!-- <masonry :cols="{ default: 5, 1400: 4, 1000: 3, 850: 2, 600: 1, 400: 1 }"> -->
     <!-- @todo The binding is not working -->
     <masonry :cols="columnsPerRow">
-      <div
-        v-for="(feedback, i) in feedbacks"
-        :key="i"
-        class="pa-3"
-        max-width="450"
-      >
+      <div v-for="(review, i) in reviews" :key="i" class="pa-3" max-width="450">
         <!-- When card clicked, expand and bring to response page -->
         <!-- This querying and filtering should be done in the logic instead of inside the template -->
-        <v-card v-if="feedback.tags.includes(query.tag)">
-          {{ feedback.text }}
+
+        <!-- @todo Tmp hide this as no tags yet -->
+        <!-- <v-card v-if="false && review.tags.includes(query.tag)"> -->
+
+        <v-card>
+          {{ review.message }}
 
           <hr />
 
-          <!-- Put details of this feedback -->
+          <!-- Put details of this review -->
           <!-- product name? -->
           <!-- user tags if any -->
           <br />
-          "{{ feedback.product }}"
-          <br />
           <!-- On click modify the filter menu, by modifying the props and url of this view -->
+
+          <!-- Ideally use this once converted to an object -->
+          <!-- v-for="(tag, j) in links[review.linkID].tags" -->
+          <!-- Do like a v-else to show user did not have any tag if tags.length == 0 -->
           <v-chip
-            v-for="(tag, j) in feedback.tags"
+            v-for="(tag, j) in tmpGetLinkTags(review.linkID)"
             :key="j"
             class="ma-2"
             :to="{ name: 'reviews' }"
@@ -68,11 +73,17 @@ import { mapState } from "vuex";
 export default {
   name: "reviews",
 
-  props: [],
+  // props: [
+  //   botID: {
+  //     defult: this.$store.state.bots.current.id
+  //   }
+  // ],
 
   created() {
-    // this.$store.dispatch("classes/getUserReview", this.classID);
+    // this.$store.dispatch("reviews/getReviews");
+    this.refresh();
   },
+
   destroyed() {
     // Although this would be unnecessary if we do not store reviews into persistence state
     // This can still help free up memory by removing userReviews.
@@ -82,51 +93,33 @@ export default {
 
   data() {
     return {
+      botID: this.$store.state.bots.current.id,
+
       // Defaults to 5 and can be set by user
       columnsPerRow: 5,
 
       query: {
         tag: "firstTimeUser",
       },
-      feedbacks: [
-        {
-          text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia risus in magna mattis porttitor nec sit amet neque. Suspendisse ac lorem risus. In egestas nibh lacus, a porttitor mauris pretium non. Vestibulum rhoncus massa sit amet efficitur ultrices. Vestibulum sed elementum lorem. Proin venenatis, arcu et laoreet pretium, augue massa viverra justo",
-          product: "PRODUCT_NAME",
-          tags: ["firstTimeUser", "onlinePurchase", "ecommerce"],
-        },
-        {
-          text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia risus in magna mattis porttitor nec sit amet neque. Suspendisse ac lorem risus. In egestas nibh lacus, a porttitor mauris pretium non. Vestibulum rhoncus massa sit amet efficitur ultrices. Vestibulum sed elementum lorem. Proin venenatis, arcu et laoreet pretium, augue massa viverra justo",
-          product: "PRODUCT_NAME",
-          tags: ["firstTimeUser", "onlinePurchase", "ecommerce"],
-        },
-        {
-          text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia risus in magna mattis porttitor nec sit amet neque. Suspendisse ac lorem risus. In egestas nibh lacus, a porttitor mauris pretium non. Vestibulum rhoncus massa sit amet efficitur ultrices. Vestibulum sed elementum lorem. Proin venenatis, arcu et laoreet pretium, augue massa viverra justo",
-          product: "PRODUCT_NAME",
-          tags: ["firstTimeUser", "onlinePurchase", "ecommerce"],
-        },
-        {
-          text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia risus in magna mattis porttitor nec sit amet neque. Suspendisse ac lorem risus. In egestas nibh lacus, a porttitor mauris pretium non. Vestibulum rhoncus massa sit amet efficitur ultrices. Vestibulum sed elementum lorem. Proin venenatis, arcu et laoreet pretium, augue massa viverra justo",
-          product: "PRODUCT_NAME",
-          tags: ["firstTimeUser", "onlinePurchase", "ecommerce"],
-        },
-        {
-          text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia risus in magna mattis porttitor nec sit amet neque. Suspendisse ac lorem risus. In egestas nibh lacus, a porttitor mauris pretium non. Vestibulum rhoncus massa sit amet efficitur ultrices. Vestibulum sed elementum lorem. Proin venenatis, arcu et laoreet pretium, augue massa viverra justo",
-          product: "PRODUCT_NAME",
-          tags: ["firstTimeUser", "onlinePurchase", "ecommerce"],
-        },
-      ],
     };
   },
 
   computed: {
-    // @todo Move the filtering logic for the tags, either here or on the backend service itself.
-    // ...mapState("classes", ["review"]),
+    // Perhaps all the route should have the botID prepended or have it attached as a URL query?
 
+    ...mapState("reviews", [`bot`]),
+
+    reviews() {
+      // Only return the reviews namespaced under this reviews.
+      return this.bot[this.botID];
+    },
+
+    links() {
+      // Only return the reviews namespaced under this reviews.
+      return this.$store.state.links.bot[this.botID || 1] || [];
+    },
+
+    // @todo Move the filtering logic for the tags, either here or on the backend service itself.
     unionTags() {
       return this.$route.query.unionTags?.split(";") || [];
     },
@@ -139,6 +132,15 @@ export default {
   },
 
   methods: {
+    tmpGetLinkTags(linkID) {
+      return this.links[this.links.findIndex((link) => link.id === linkID)]
+        ?.tags;
+    },
+
+    refresh() {
+      this.$store.dispatch("reviews/getReviews");
+    },
+
     setUntag(tag) {
       // const untags = this.untags + `${tag};`;
       // console.log("untags", untags);
@@ -169,13 +171,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-#class-image {
-  max-height: 70vh;
-}
-
-#reviews-card {
-  text-align: left;
-}
-</style>
