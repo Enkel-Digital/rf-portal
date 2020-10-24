@@ -29,7 +29,7 @@
           <v-list-item-content>
             <!-- Have another feature where you can scan the code on mobile and it will tell you which code it is -->
 
-            created on: {{ moment.unix(link.createdAt).format("L") }}
+            created on: {{ moment.unix(link.createdAt).format("LLLL") }}
             <br />
 
             name: {{ link.name }}

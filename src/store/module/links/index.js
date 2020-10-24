@@ -21,6 +21,10 @@ export default {
     addNewLinks(state, { botID, links }) {
       Vue.set(state.bot, botID, links);
     },
+    deleteLink(state, { botID, linkID }) {
+      const index = state.bot[botID].findIndex((link) => link.id === linkID);
+      if (index > 0) state.bot[botID].splice(index, 1);
+    },
   },
   actions: {
     /**
@@ -63,6 +67,20 @@ export default {
       // Backend will return the new link object
       // Add the newly created link into the list of links too
       commit("addNewLink", { botID, link: response.link });
+    },
+
+    async deleteLink({ rootState, commit, dispatch }, linkID) {
+      const botID = rootState.bots.current.id;
+
+      const response = await apiWithLoader.delete(`/links/${linkID}`);
+      if (!response.ok)
+        return apiError(
+          response,
+          () => dispatch("deleteLink", linkID),
+          "Failed to delete link"
+        );
+
+      commit("deleteLink", { botID, linkID });
     },
   },
 };
