@@ -34,6 +34,18 @@ const routes = [
     props: true,
   },
   {
+    path: "/survey/all",
+    name: "surveys-all",
+    component: () => import("@/views/AllSurveys.vue"),
+    meta: { Auth_requirements: AuthType.private },
+  },
+  {
+    path: "/survey/new",
+    name: "surveys-new",
+    component: () => import("@/views/NewSurvey.vue"),
+    meta: { Auth_requirements: AuthType.private },
+  },
+  {
     path: "/link/all",
     name: "all-links",
     component: () => import("@/views/AllLinks.vue"),

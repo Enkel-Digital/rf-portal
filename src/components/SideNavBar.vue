@@ -68,6 +68,23 @@
         </v-list-item-content>
       </v-list-item> -->
 
+      <v-subheader>Surveys</v-subheader>
+      <v-list-item
+        exact
+        ripple
+        v-for="item in surveyTabs"
+        :key="item.title"
+        :to="item.link"
+      >
+        <v-list-item-icon>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
       <v-subheader>Reviews</v-subheader>
       <v-list-item
         exact
@@ -175,18 +192,18 @@ export default {
         //   link: { name: "view-schedule" },
         // },
       ],
-      // billingTabs: [
-      //   {
-      //     icon: "mdi-cash-usd",
-      //     text: "Earnings",
-      //     link: { name: "earnings" },
-      //   },
-      //   {
-      //     icon: "mdi-card-text",
-      //     text: "Withdrawal",
-      //     link: { name: "withdrawal" },
-      //   },
-      // ],
+      surveyTabs: [
+        {
+          icon: "mdi-view-list",
+          text: "View all surveys",
+          link: { name: "surveys-all" },
+        },
+        {
+          icon: "mdi-plus",
+          text: "Create Survey",
+          link: { name: "surveys-new" },
+        },
+      ],
       reviewTabs: [
         {
           icon: "mdi-view-list",
