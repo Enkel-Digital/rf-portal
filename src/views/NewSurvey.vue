@@ -1,5 +1,5 @@
 <template>
-  <v-main id="createLinks">
+  <v-main id="createSurvey">
     <v-row>
       <v-col cols="12" sm="6">
         <v-card outlined ref="form" v-model="valid">
@@ -11,9 +11,11 @@
 
             <!-- @todo Show the SGT somewhere on this page -->
 
+            <!-- @todo Tell the biz user that this is what the user first sees when they open up the chat -->
+
             <v-text-field
               v-autofocus
-              v-model="link.name"
+              v-model="survey.name"
               :rules="nameRules"
               label="Name"
               placeholder="E.g. Product 'X' feedback survey"
@@ -23,7 +25,7 @@
 
             <!-- @todo Why single-line attr.? -->
             <v-combobox
-              v-model="link.tags"
+              v-model="survey.tags"
               :items="tags"
               chips
               color="#60696c"
@@ -50,7 +52,7 @@
               label="Description"
               type="text"
               @change="sanitized = false"
-              v-model="link.description"
+              v-model="survey.description"
               rows="4"
               outlined
               placeholder="Describe this survey (optional)"
@@ -75,8 +77,8 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="link.dateStart"
-                  label="Link activation date"
+                  v-model="survey.dateStart"
+                  label="Survey activation date"
                   prepend-icon="mdi-calendar-month"
                   color="#60696c"
                   readonly
@@ -85,7 +87,7 @@
                 />
               </template>
               <v-date-picker
-                v-model="link.dateStart"
+                v-model="survey.dateStart"
                 color="#60696c"
                 header-color="#60696c"
                 event-color="#60696c"
@@ -103,8 +105,8 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="link.dateEnd"
-                  label="Link deactivation date (optional)"
+                  v-model="survey.dateEnd"
+                  label="Survey deactivation date (optional)"
                   prepend-icon="mdi-calendar-month"
                   color="#60696c"
                   readonly
@@ -113,7 +115,7 @@
                 />
               </template>
               <v-date-picker
-                v-model="link.dateEnd"
+                v-model="survey.dateEnd"
                 header-color="#60696c"
                 color="#60696c"
                 event-color="#60696c"
@@ -124,10 +126,11 @@
         </v-card>
       </v-col>
 
-      <!-- Show total length of link validity, e.g. 14 days -->
+      <!-- Show total length of survey validity, e.g. 14 days -->
     </v-row>
 
     <br />
+    <hr />
 
     <!-- Buttons to reset and create -->
     <v-row class="text-center">
@@ -153,9 +156,9 @@
           width="15em"
           depressed
           large
-          @click="createLink"
+          @click="createSurvey"
         >
-          Create link
+          Create survey
         </v-btn>
       </v-col>
     </v-row>
@@ -178,7 +181,7 @@ export default {
       // @todo Update this to be populated by an API instead
       tags: ["vip", "newUser", "secondPurchase", "christmas-promo"],
 
-      link: {
+      survey: {
         name: null,
         description: null,
 
@@ -200,8 +203,8 @@ export default {
   },
 
   methods: {
-    async createLink() {
-      const link = cloneDeep(this.link);
+    async createSurvey() {
+      const survey = cloneDeep(this.survey);
 
       // Convert start date to start of day in UTC timestamp
 
@@ -220,20 +223,20 @@ export default {
        * Will this be an issue that needs to be taken care of?
        * Will this affect rrule generation and testing.
        */
-      link.dateStart = moment(link.dateStart).startOf("day").utc().unix();
+      survey.dateStart = moment(survey.dateStart).startOf("day").utc().unix();
 
       // Only if dateEnd is given, then do we convert it to timestamp
-      if (link.dateEnd)
-        link.dateEnd = moment(link.dateEnd).startOf("day").utc().unix();
+      if (survey.dateEnd)
+        survey.dateEnd = moment(survey.dateEnd).startOf("day").utc().unix();
 
-      const linkID = await this.$store.dispatch("links/newLink", link);
+      const surveyID = await this.$store.dispatch("surveys/newsurvey", survey);
 
       // @todo Tmp redirect
-      this.$router.push({ name: "all-links" });
+      this.$router.push({ name: "all-surveys" });
 
-      // Redirect to show link details
-      // if (linkID)
-      //   this.$router.push({ name: "linkDetails", params: { linkID } });
+      // Redirect to show survey details
+      // if (surveyID)
+      //   this.$router.push({ name: "surveyDetails", params: { surveyID } });
     },
 
     reset() {
@@ -243,15 +246,15 @@ export default {
 
     // Remove a tag item
     remove(item) {
-      this.link.tags.splice(this.link.tags.indexOf(item), 1);
-      this.link.tags = [...this.link.tags];
+      this.survey.tags.splice(this.survey.tags.indexOf(item), 1);
+      this.survey.tags = [...this.survey.tags];
     },
   },
 };
 </script>
 
 <style scoped>
-#createLinks {
+#createSurvey {
   margin: 4em;
   margin-top: 1em;
   text-align: left;
