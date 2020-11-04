@@ -132,6 +132,11 @@
     <br />
     <hr />
 
+    <NewQuestion />
+
+    <br />
+    <hr />
+
     <!-- Buttons to reset and create -->
     <v-row class="text-center">
       <v-col cols="6">
@@ -171,8 +176,15 @@
 
 import moment from "moment";
 import cloneDeep from "lodash.clonedeep";
+import NewQuestion from "@/components/NewQuestion.vue";
 
 export default {
+  name: "NewSurvey",
+
+  components: {
+    NewQuestion,
+  },
+
   data() {
     return {
       showStartDateMenu: false,
